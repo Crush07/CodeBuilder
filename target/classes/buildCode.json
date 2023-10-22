@@ -1,0 +1,15 @@
+{
+  "poPackage": "com.hysea.hyseaappapi.entity.po",
+  "poEntityPrefix": "hy",
+  "daoPackage": "com.hysea.hyseaappapi.dao",
+  "jsonInputPath": "jsonInput",
+  "classOutputPoPath": "src/main/java/com/hysea/hyseaappapi/output/entity/po",
+  "classOutputPoPackage": "com.hysea.hyseaappapi.output.entity.po",
+  "buildClassAliasMap": [
+    {
+      "entity1": "blog",
+      "entity2": "praiseUser",
+      "alias": "blogPraise"
+    }
+  ]
+}

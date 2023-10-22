@@ -1,0 +1,4 @@
+生成service和controller层
+导入导出功能
+生成entity调整参数顺序，id第一，updateTime倒数第二，createTime倒数第一
+新增接口，路径，入参（query,body分别对应），返回值参数结构，注释每一个参数的意义，接口意义，只有query为get，有body为post

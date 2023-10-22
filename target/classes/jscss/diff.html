@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/1506085843/fillDiff@master/src/main/resources/css/github.min.css" />
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/1506085843/fillDiff@master/src/main/resources/css/diff2html.min.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/1506085843/fillDiff@master/src/main/resources/js/diff2html-ui.min.js"></script>
+  </head>
+  <script>
+    const diffString = `
+--- HyBlog.java
++++ HyBlog1.java
+@@ -0,0 +0,0 @@
+ package com.hysea.hyseaappapi.entity.po;
+ 
+ import java.util.Date;
+ import java.util.List;
+ import java.io.Serializable;
+ import lombok.*;
+ 
+ /**
+  * @author hysea
+  */
+ @Data
+ public class HyBlog implements Serializable {
+ 
+ 
+@@ -15,3 +15,0 @@
+-	/**
+-	 * 
+-	 */
+ 	private Integer createTime;
+ 
+ 
+ 	/**
+ 	 * 
+ 	 */
+@@ -24,1 +21,1 @@
+-	private String blogContent;
++	private String blogConent;
+ 
+ 
+ 	/**
+ 	 * 
+ 	 */
+ 	private Integer updateTime;
+ 
+ 
+ 	/**
+ 	 * 
+ 	 */
+ 	private Integer blogViewCount;
+ 
+ 
+ 	/**
+ 	 * 
+ 	 */
+ 	private String id;
+ 
+ 
+ 	/**
+ 	 * 
+ 	 */
+ 	private String blogTitle;
+ 
+ 
+ }
+
+`;
+
+
+     document.addEventListener('DOMContentLoaded', function () {
+      var targetElement = document.getElementById('myDiffElement');
+      var configuration = {
+        drawFileList: true,
+        fileListToggle: true,
+        fileListStartVisible: true,
+        fileContentToggle: true,
+        matching: 'lines',
+        outputFormat: 'side-by-side',
+        synchronisedScroll: true,
+        highlight: true,
+        renderNothingWhenEmpty: true,
+      };
+      var diff2htmlUi = new Diff2HtmlUI(targetElement, diffString, configuration);
+      diff2htmlUi.draw();
+      diff2htmlUi.highlightCode();
+    });
+  </script>
+  <body>
+    <div id="myDiffElement"></div>
+  </body>
+</html>

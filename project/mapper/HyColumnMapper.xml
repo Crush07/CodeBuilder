@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hysea.hyseaappapi.dao.HyColumnMapper">
+	
+	<select id="selectCountByColumCover" resultType="java.lang.Integer">
+		select count(*) 
+		from hy_column 
+		where colum_cover = #{columCover}
+	</select>
+	
+	<select id="selectAllByColumCover" resultMap="HyColumn">
+		select * 
+		from hy_column 
+		where colum_cover = #{columCover}
+	</select>
+	
+	<delete id="deleteHyColumnByColumCover">
+		delete from hy_column
+		where colum_cover = #{columCover}
+	</delete>
+	
+	<update id="updateHyColumnByColumCover">
+		update hy_column
+		<trim prefix="set" suffixOverrides=",">
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="columTitle != null">
+				colum_title = #{columTitle},
+			</if>
+		</trim>
+		where colum_cover = #{columCover}
+	</update>
+	
+	<insert id="batchInsertHyColumn" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_column (`colum_cover`,`create_time`,`remark`,`update_time`,`id`,`colum_title`)
+		values
+		<foreach collection="hyColumnList" item="hyColumn" index="index" separator=",">
+			(#{hyColumn.columCover},#{hyColumn.createTime},#{hyColumn.remark},#{hyColumn.updateTime},#{hyColumn.id},#{hyColumn.columTitle})
+		</foreach>
+	</insert>
+	
+	<insert id="insertHyColumn" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_column (`colum_cover`,`create_time`,`remark`,`update_time`,`id`,`colum_title`)
+		values
+		(#{columCover},#{createTime},#{remark},#{updateTime},#{id},#{columTitle})
+	</insert>
+	
+	<select id="selectAll" resultMap="HyColumn">
+		select * 
+		from hy_column 
+	</select>
+	
+	
+	<resultMap id="HyColumn" type="com.hysea.hyseaappapi.entity.po.HyColumn">
+		<result column="colum_cover" property="columCover"/>
+		<result column="create_time" property="createTime"/>
+		<result column="remark" property="remark"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="id" property="id"/>
+		<result column="colum_title" property="columTitle"/>
+	</resultMap>
+</mapper>

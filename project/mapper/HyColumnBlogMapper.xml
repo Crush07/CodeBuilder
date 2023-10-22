@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hysea.hyseaappapi.dao.HyColumnBlogMapper">
+	
+	<select id="selectCountByCreateTime" resultType="java.lang.Integer">
+		select count(*) 
+		from hy_column_blog 
+		where create_time = #{createTime}
+	</select>
+	
+	<select id="selectAllByCreateTime" resultMap="HyColumnBlog">
+		select * 
+		from hy_column_blog 
+		where create_time = #{createTime}
+	</select>
+	
+	<delete id="deleteHyColumnBlogByCreateTime">
+		delete from hy_column_blog
+		where create_time = #{createTime}
+	</delete>
+	
+	<update id="updateHyColumnBlogByCreateTime">
+		update hy_column_blog
+		<trim prefix="set" suffixOverrides=",">
+			<if test="columnId != null">
+				column_id = #{columnId},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="blogId != null">
+				blog_id = #{blogId},
+			</if>
+		</trim>
+		where create_time = #{createTime}
+	</update>
+	
+	<insert id="batchInsertHyColumnBlog" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_column_blog (`create_time`,`column_id`,`update_time`,`id`,`blog_id`)
+		values
+		<foreach collection="hyColumnBlogList" item="hyColumnBlog" index="index" separator=",">
+			(#{hyColumnBlog.createTime},#{hyColumnBlog.columnId},#{hyColumnBlog.updateTime},#{hyColumnBlog.id},#{hyColumnBlog.blogId})
+		</foreach>
+	</insert>
+	
+	<insert id="insertHyColumnBlog" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_column_blog (`create_time`,`column_id`,`update_time`,`id`,`blog_id`)
+		values
+		(#{createTime},#{columnId},#{updateTime},#{id},#{blogId})
+	</insert>
+	
+	<select id="selectAll" resultMap="HyColumnBlog">
+		select * 
+		from hy_column_blog 
+	</select>
+	
+	
+	<resultMap id="HyColumnBlog" type="com.hysea.hyseaappapi.entity.po.HyColumnBlog">
+		<result column="create_time" property="createTime"/>
+		<result column="column_id" property="columnId"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="id" property="id"/>
+		<result column="blog_id" property="blogId"/>
+	</resultMap>
+</mapper>

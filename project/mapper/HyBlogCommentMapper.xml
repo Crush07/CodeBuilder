@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hysea.hyseaappapi.dao.HyBlogCommentMapper">
+	
+	<select id="selectCountByCreateTime" resultType="java.lang.Integer">
+		select count(*) 
+		from hy_blog_comment 
+		where create_time = #{createTime}
+	</select>
+	
+	<select id="selectAllByCreateTime" resultMap="HyBlogComment">
+		select * 
+		from hy_blog_comment 
+		where create_time = #{createTime}
+	</select>
+	
+	<delete id="deleteHyBlogCommentByCreateTime">
+		delete from hy_blog_comment
+		where create_time = #{createTime}
+	</delete>
+	
+	<update id="updateHyBlogCommentByCreateTime">
+		update hy_blog_comment
+		<trim prefix="set" suffixOverrides=",">
+			<if test="commentId != null">
+				comment_id = #{commentId},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="blogId != null">
+				blog_id = #{blogId},
+			</if>
+		</trim>
+		where create_time = #{createTime}
+	</update>
+	
+	<insert id="batchInsertHyBlogComment" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_blog_comment (`create_time`,`comment_id`,`update_time`,`id`,`blog_id`)
+		values
+		<foreach collection="hyBlogCommentList" item="hyBlogComment" index="index" separator=",">
+			(#{hyBlogComment.createTime},#{hyBlogComment.commentId},#{hyBlogComment.updateTime},#{hyBlogComment.id},#{hyBlogComment.blogId})
+		</foreach>
+	</insert>
+	
+	<insert id="insertHyBlogComment" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_blog_comment (`create_time`,`comment_id`,`update_time`,`id`,`blog_id`)
+		values
+		(#{createTime},#{commentId},#{updateTime},#{id},#{blogId})
+	</insert>
+	
+	<select id="selectAll" resultMap="HyBlogComment">
+		select * 
+		from hy_blog_comment 
+	</select>
+	
+	
+	<resultMap id="HyBlogComment" type="com.hysea.hyseaappapi.entity.po.HyBlogComment">
+		<result column="create_time" property="createTime"/>
+		<result column="comment_id" property="commentId"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="id" property="id"/>
+		<result column="blog_id" property="blogId"/>
+	</resultMap>
+</mapper>

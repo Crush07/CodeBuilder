@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hysea.hyseaappapi.dao.HyBlogPraiseMapper">
+	
+	<select id="selectCountByPraiseUserId" resultType="java.lang.Integer">
+		select count(*) 
+		from hy_blog_praise 
+		where praise_user_id = #{praiseUserId}
+	</select>
+	
+	<select id="selectAllByPraiseUserId" resultMap="HyBlogPraise">
+		select * 
+		from hy_blog_praise 
+		where praise_user_id = #{praiseUserId}
+	</select>
+	
+	<delete id="deleteHyBlogPraiseByPraiseUserId">
+		delete from hy_blog_praise
+		where praise_user_id = #{praiseUserId}
+	</delete>
+	
+	<update id="updateHyBlogPraiseByPraiseUserId">
+		update hy_blog_praise
+		<trim prefix="set" suffixOverrides=",">
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="blogId != null">
+				blog_id = #{blogId},
+			</if>
+		</trim>
+		where praise_user_id = #{praiseUserId}
+	</update>
+	
+	<insert id="batchInsertHyBlogPraise" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_blog_praise (`praise_user_id`,`create_time`,`update_time`,`id`,`blog_id`)
+		values
+		<foreach collection="hyBlogPraiseList" item="hyBlogPraise" index="index" separator=",">
+			(#{hyBlogPraise.praiseUserId},#{hyBlogPraise.createTime},#{hyBlogPraise.updateTime},#{hyBlogPraise.id},#{hyBlogPraise.blogId})
+		</foreach>
+	</insert>
+	
+	<insert id="insertHyBlogPraise" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_blog_praise (`praise_user_id`,`create_time`,`update_time`,`id`,`blog_id`)
+		values
+		(#{praiseUserId},#{createTime},#{updateTime},#{id},#{blogId})
+	</insert>
+	
+	<select id="selectAll" resultMap="HyBlogPraise">
+		select * 
+		from hy_blog_praise 
+	</select>
+	
+	
+	<resultMap id="HyBlogPraise" type="com.hysea.hyseaappapi.entity.po.HyBlogPraise">
+		<result column="praise_user_id" property="praiseUserId"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="id" property="id"/>
+		<result column="blog_id" property="blogId"/>
+	</resultMap>
+</mapper>

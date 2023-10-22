@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hysea.hyseaappapi.dao.HyCommentMapper">
+	
+	<select id="selectCountByCreateTime" resultType="java.lang.Integer">
+		select count(*) 
+		from hy_comment 
+		where create_time = #{createTime}
+	</select>
+	
+	<select id="selectAllByCreateTime" resultMap="HyComment">
+		select * 
+		from hy_comment 
+		where create_time = #{createTime}
+	</select>
+	
+	<delete id="deleteHyCommentByCreateTime">
+		delete from hy_comment
+		where create_time = #{createTime}
+	</delete>
+	
+	<update id="updateHyCommentByCreateTime">
+		update hy_comment
+		<trim prefix="set" suffixOverrides=",">
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="commentUserId != null">
+				comment_user_id = #{commentUserId},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+		</trim>
+		where create_time = #{createTime}
+	</update>
+	
+	<insert id="batchInsertHyComment" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_comment (`create_time`,`update_time`,`id`,`comment_user_id`,`content`)
+		values
+		<foreach collection="hyCommentList" item="hyComment" index="index" separator=",">
+			(#{hyComment.createTime},#{hyComment.updateTime},#{hyComment.id},#{hyComment.commentUserId},#{hyComment.content})
+		</foreach>
+	</insert>
+	
+	<insert id="insertHyComment" keyProperty="id" useGeneratedKeys="true">
+		insert into hy_comment (`create_time`,`update_time`,`id`,`comment_user_id`,`content`)
+		values
+		(#{createTime},#{updateTime},#{id},#{commentUserId},#{content})
+	</insert>
+	
+	<select id="selectAll" resultMap="HyComment">
+		select * 
+		from hy_comment 
+	</select>
+	
+	
+	<resultMap id="HyComment" type="com.hysea.hyseaappapi.entity.po.HyComment">
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="id" property="id"/>
+		<result column="comment_user_id" property="commentUserId"/>
+		<result column="content" property="content"/>
+	</resultMap>
+</mapper>
